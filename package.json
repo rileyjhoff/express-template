@@ -6,10 +6,10 @@
   "type": "commonjs",
   "scripts": {
     "lint": "eslint --ext js --ext lib",
-    "test": "cross-env DOTENV_CONFIG_PATH=./tests/.env jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config --passWithNoTests",
+    "test": "env-cmd --silent -f ./tests/.env jest --verbose --runInBand --testLocationInResults --passWithNoTests",
     "test:watch": "npm run test -- --watch",
-    "start": "node -r dotenv/config server.js",
-    "start:watch": "nodemon -i ./tests -r dotenv/config server.js",
+    "start": "env-cmd node server.js",
+    "start:watch": "env-cmd nodemon -i ./tests server.js",
     "create-db:local": "env-cmd createdb",
     "create-db:test": "env-cmd -f ./tests/.env createdb",
     "create-dbs": "npm run create-db:local && npm run create-db:test",
