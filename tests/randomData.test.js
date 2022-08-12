@@ -16,8 +16,8 @@ describe('/api/v1/random-data', () => {
     expect(status).toEqual(200);
     expect(body).toEqual({
       ...newRandomData,
-      id: expect.any(String),
-      user_id: user.id,
+      id: expect.any(Number),
+      userId: user.id,
       active: false,
     });
   });

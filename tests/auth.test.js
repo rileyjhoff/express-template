@@ -9,8 +9,10 @@ describe('/api/v1/auth', () => {
     const { agent, user, credentials } = await signUpUser();
 
     expect(user).toEqual({
-      id: expect.any(String),
+      id: expect.any(Number),
       email: credentials.email,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
     });
 
     const { statusCode } = await agent.get('/api/v1/auth/verify');
@@ -34,8 +36,10 @@ describe('/api/v1/auth', () => {
     const res = await agent.post('/api/v1/auth/signin').send(credentials);
 
     expect(res.body).toEqual({
-      id: expect.any(String),
+      id: expect.any(Number),
       email: credentials.email,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
     });
 
     const { statusCode } = await agent.get('/api/v1/auth/verify');
