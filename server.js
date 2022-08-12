@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const http = require('node:http');
+const sequelize = require('./lib/utils/sequelize.js');
 const app = require('./lib/app');
-const pool = require('./lib/utils/pool');
 
 const PORT = process.env.PORT || 7890;
 
@@ -13,5 +13,5 @@ server.listen(PORT, () => {
 
 process.on('exit', () => {
   console.log('👋  Goodbye!');
-  pool.end();
+  sequelize.close();
 });
