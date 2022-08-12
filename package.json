@@ -1,16 +1,20 @@
 {
-  "name": "backend-express-template",
+  "name": "express-template",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "test": "jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config --passWithNoTests",
+    "lint": "eslint --ext js --ext lib",
+    "test": "env-cmd --silent -f ./tests/.env jest --verbose --runInBand --testLocationInResults --passWithNoTests",
     "test:watch": "npm run test -- --watch",
-    "start": "node -r dotenv/config server.js",
-    "start:watch": "nodemon -r dotenv/config server.js",
-    "setup-db": "node -r dotenv/config setup-db.js",
-    "setup-heroku": "heroku run npm run setup-db"
+    "start": "env-cmd node server.js",
+    "start:watch": "env-cmd nodemon -i ./tests server.js",
+    "create-db:local": "env-cmd createdb",
+    "create-db:test": "env-cmd -f ./tests/.env createdb",
+    "create-dbs": "npm run create-db:local && npm run create-db:test",
+    "setup-db": "env-cmd node ./sql/setup.js",
+    "setup-db:heroku": "heroku run npm run setup-db"
   },
   "jest": {
     "testEnvironment": "node"
@@ -34,11 +38,11 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.0.1",
+    "env-cmd": "^10.1.0",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.3"
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.3"
   }
 }
