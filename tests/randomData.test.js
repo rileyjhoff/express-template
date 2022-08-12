@@ -19,6 +19,8 @@ describe('/api/v1/random-data', () => {
       id: expect.any(Number),
       userId: user.id,
       active: false,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
     });
   });
 
@@ -87,7 +89,11 @@ describe('/api/v1/random-data', () => {
       .send({ active: true });
 
     expect(status).toBe(200);
-    expect(updated).toEqual({ ...randomData, active: true });
+    expect(updated).toEqual({
+      ...randomData,
+      updatedAt: expect.any(String),
+      active: true,
+    });
   });
 
   it('UPDATE /:id should 403 for invalid users', async () => {
@@ -126,7 +132,7 @@ describe('/api/v1/random-data', () => {
       `/api/v1/random-data/${randomData.id}`
     );
     expect(status).toBe(200);
-    expect(body).toEqual(randomData);
+    expect(body).toEqual({ deleted: true });
 
     const { body: deleteReturn } = await agent.get('/api/v1/random-data');
 
